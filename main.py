@@ -9,7 +9,6 @@ from playerscore import *
 
 def main():
 	pygame.init()
-	scoreFont = pygame.font.SysFont('Arial',30)
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 	dt = 0
 	clock = pygame.time.Clock()
