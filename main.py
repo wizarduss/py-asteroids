@@ -5,9 +5,11 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from playerscore import *
 
 def main():
 	pygame.init()
+	scoreFont = pygame.font.SysFont('Arial',30)
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 	dt = 0
 	clock = pygame.time.Clock()
@@ -25,6 +27,7 @@ def main():
 	px = SCREEN_WIDTH / 2
 	py = SCREEN_HEIGHT / 2
 	player = Player(px, py)
+	playerScore = PlayerScore(15,15)
 	asteroidField = AsteroidField()
 
 	while True:
@@ -42,8 +45,11 @@ def main():
 				if asteroid.checkCollision(shot):
 					shot.kill()
 					asteroid.split()
+					playerScore.add_player_score(asteroid.radius)
+
 
 		screen.fill('black')
+		playerScore.displayScore(screen)
 
 		for sprite in drawable:
 			sprite.draw(screen)
