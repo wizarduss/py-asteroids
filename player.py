@@ -8,7 +8,7 @@ class Player(CircleShape):
 		super().__init__(x, y, PLAYER_RADIUS)
 		self.rotation = 0
 		self.shootTimer = 0
-		self.score = 0
+		self.respawnTimer = 0
 
 	def triangle(self):
 		forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -19,13 +19,18 @@ class Player(CircleShape):
 		return [a, b, c]
 
 	def draw(self, screen):
-		pygame.draw.polygon(screen, "white", self.triangle(), 2)
+		if self.respawnTimer%4 == 0 and self.respawnTimer > 0:
+			width = 0
+		else:
+			width = 2
+		pygame.draw.polygon(screen, "white", self.triangle(), width)
 
 	def rotate(self, dt):
 		self.rotation += PLAYER_TURN_SPEED * dt
 
 	def update(self, dt):
 		self.shootTimer -= dt
+		self.respawnTimer -= 1
 		keys = pygame.key.get_pressed()
 
 		if keys[pygame.K_a]:
@@ -49,8 +54,8 @@ class Player(CircleShape):
 			shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
 			self.shootTimer = PLAYER_SHOOT_COOLDOWN
 
-	def addScore(self):
-		self.score += 1
-
-	def getScore(self):
-		return str(self.score)
+	def respawn(self, x, y):
+		self.position = pygame.Vector2(x, y)
+		self.velocity = pygame.Vector2(0, 0)
+		self.rotation = 0
+		self.respawnTimer = PLAYER_RESPAWN_TIMER

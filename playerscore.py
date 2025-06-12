@@ -6,7 +6,7 @@ class PlayerScore():
 		pygame.font.init()
 		self.score = 0
 
-		self.font = pygame.font.SysFont('Arial',32)
+		self.font = pygame.font.SysFont('Arial',16)
 		self.fontX = x
 		self.fontY = y
 
@@ -16,8 +16,8 @@ class PlayerScore():
 
 	def add_player_score(self, radius):
 		if radius == ASTEROID_MAX_RADIUS:
-			self.score += 5
+			self.score += ASTEROID_LARGE_SCORE
 		if radius < ASTEROID_MAX_RADIUS and radius > ASTEROID_MIN_RADIUS:
-			self.score += 15
+			self.score += ASTEROID_MEDIUM_SCORE
 		if radius == ASTEROID_MIN_RADIUS:
-			self.score += 30
+			self.score += ASTEROID_SMALL_SCORE
